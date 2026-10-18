@@ -10,6 +10,8 @@ Student Task Manager — навчальний вебзастосунок для 
 
 Потреби користувача й критерії приймання описані у файлі [docs/user-stories.md](docs/user-stories.md).
 
+Актори, випадки використання та основний сценарій описані у файлі [docs/use-case.md](docs/use-case.md).
+
 ## Вимоги
 
 [Переглянути вимоги до продукту](docs/requirements.md).

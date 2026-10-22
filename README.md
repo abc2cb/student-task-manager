@@ -14,6 +14,8 @@ Student Task Manager — навчальний вебзастосунок для 
 
 Activity-діаграма ключового процесу доступна у файлі [docs/activity-diagram.md](docs/activity-diagram.md).
 
+Спрощена class-діаграма сутностей і зв’язків доступна у файлі [docs/class-diagram.md](docs/class-diagram.md).
+
 ## Вимоги
 
 [Переглянути вимоги до продукту](docs/requirements.md).

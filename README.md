@@ -12,6 +12,8 @@ Student Task Manager — навчальний вебзастосунок для 
 
 Актори, випадки використання та основний сценарій описані у файлі [docs/use-case.md](docs/use-case.md).
 
+Activity-діаграма ключового процесу доступна у файлі [docs/activity-diagram.md](docs/activity-diagram.md).
+
 ## Вимоги
 
 [Переглянути вимоги до продукту](docs/requirements.md).

@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="uk">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Student Task Manager Prototype</title>
+  <style>
+    :root { color-scheme: light; font-family: Arial, sans-serif; }
+    * { box-sizing: border-box; }
+    body { margin: 0; min-height: 100vh; background: #eaf0f5; color: #17324d; display: grid; place-items: center; }
+    .prototype { width: min(100%, 440px); min-height: 100vh; background: #f7f9fc; box-shadow: 0 0 28px rgb(23 50 77 / 18%); }
+    header { padding: 24px; color: white; background: #17324d; }
+    header h1 { margin: 0; font-size: 22px; }
+    header p { margin: 8px 0 0; color: #d9e8f4; font-size: 14px; }
+    main { padding: 24px; }
+    .screen[hidden] { display: none; }
+    h2 { margin: 0 0 18px; font-size: 24px; }
+    .filter, .field, .details { background: white; border: 1px solid #c8d5e2; border-radius: 12px; padding: 14px 16px; }
+    .filter { display: flex; justify-content: space-between; margin-bottom: 20px; color: #425466; }
+    .task-card { width: 100%; text-align: left; border: 1px solid #c8d5e2; border-radius: 14px; padding: 16px; background: white; margin-bottom: 14px; cursor: pointer; color: inherit; }
+    .task-card:hover, .task-card:focus-visible { outline: 3px solid #9bd0eb; }
+    .task-card strong { display: block; font-size: 17px; margin-bottom: 8px; }
+    .task-card span { display: block; color: #5a6b7b; font-size: 14px; margin-top: 5px; }
+    .status { color: #31734c !important; }
+    .form-row { margin-bottom: 16px; }
+    label { display: block; font-size: 14px; color: #425466; margin-bottom: 7px; }
+    input, textarea, select { width: 100%; border: 1px solid #c8d5e2; border-radius: 10px; padding: 13px; font: inherit; color: #17324d; background: white; }
+    textarea { min-height: 98px; resize: vertical; }
+    input:focus, textarea:focus, select:focus { outline: 3px solid #9bd0eb; border-color: #2a6f97; }
+    .details { margin-bottom: 18px; }
+    .details h3 { margin: 0 0 10px; font-size: 21px; }
+    .details dl { margin: 0; }
+    .details dt { margin-top: 13px; color: #8192a3; font-size: 13px; }
+    .details dd { margin: 4px 0 0; font-size: 16px; }
+    .pill { display: inline-block; margin-bottom: 10px; padding: 6px 12px; border-radius: 20px; color: #31734c; background: #dff3e7; font-size: 13px; font-weight: 700; }
+    .actions { display: grid; gap: 12px; margin-top: 18px; }
+    button { border: 0; border-radius: 12px; padding: 15px 18px; font: inherit; font-weight: 700; cursor: pointer; }
+    button.primary { color: white; background: #2a6f97; }
+    button.secondary { color: #2a6f97; background: white; border: 1px solid #2a6f97; }
+    button.muted { color: #425466; background: white; border: 1px solid #c8d5e2; }
+    button:hover, button:focus-visible { filter: brightness(1.05); outline: 3px solid #9bd0eb; outline-offset: 2px; }
+    .feedback { min-height: 22px; margin-top: 12px; color: #31734c; font-size: 14px; }
+    .prototype-note { margin: 20px 24px 0; padding: 12px 14px; border-radius: 10px; background: #e9f2f8; color: #2a6f97; font-size: 13px; }
+  </style>
+</head>
+<body>
+  <div class="prototype" aria-label="Клікабельний прототип Student Task Manager">
+    <header>
+      <h1>Student Task Manager</h1>
+      <p id="screen-label">Мої навчальні завдання</p>
+    </header>
+    <main>
+      <section class="screen" data-screen="list">
+        <h2>Завдання</h2>
+        <div class="filter"><span>Усі дисципліни</span><span aria-hidden="true">⌄</span></div>
+        <button class="task-card" data-go="details" aria-label="Відкрити практичну роботу 13">
+          <strong>Практична робота №13</strong>
+          <span>Технологія створення продуктів</span>
+          <span style="color:#a45a2a">Дедлайн: 31 жовтня</span>
+        </button>
+        <button class="task-card" data-go="details" aria-label="Відкрити завдання підготувати прототип">
+          <strong>Підготувати прототип</strong>
+          <span>Проєкт Student Task Manager</span>
+          <span class="status">Статус: у роботі</span>
+        </button>
+        <div class="actions"><button class="primary" data-go="create">＋ Додати завдання</button></div>
+      </section>
+
+      <section class="screen" data-screen="create" hidden>
+        <h2>Додати завдання</h2>
+        <div class="form-row"><label for="task-name">Назва завдання</label><input id="task-name" value="Підготувати прототип"></div>
+        <div class="form-row"><label for="task-course">Дисципліна</label><input id="task-course" value="Технологія створення продуктів"></div>
+        <div class="form-row"><label for="task-date">Дедлайн</label><input id="task-date" type="date" value="2026-10-31"></div>
+        <div class="form-row"><label for="task-priority">Пріоритет</label><select id="task-priority"><option>Середній</option><option>Високий</option><option>Низький</option></select></div>
+        <div class="form-row"><label for="task-description">Короткий опис</label><textarea id="task-description">Створити ескізи основних екранів.</textarea></div>
+        <div class="actions">
+          <button class="secondary" data-go="list">Скасувати</button>
+          <button class="primary" data-save="true">Зберегти</button>
+        </div>
+        <p class="feedback" id="create-feedback" role="status"></p>
+      </section>
+
+      <section class="screen" data-screen="details" hidden>
+        <h2>Деталі завдання</h2>
+        <div class="details">
+          <span class="pill" id="detail-status">У роботі</span>
+          <h3>Практична робота №13</h3>
+          <dl>
+            <dt>Дисципліна</dt><dd>Технологія створення продуктів</dd>
+            <dt>Дедлайн</dt><dd>31 жовтня 2026</dd>
+            <dt>Опис</dt><dd>Створити ескізи основних екранів.</dd>
+          </dl>
+        </div>
+        <div class="actions">
+          <button class="primary" data-complete="true">Позначити виконаним</button>
+          <button class="secondary" data-go="create">Редагувати</button>
+          <button class="muted" data-go="list">Повернутися до списку</button>
+        </div>
+        <p class="feedback" id="detail-feedback" role="status"></p>
+      </section>
+    </main>
+    <p class="prototype-note">Клікабельний сценарій: список → створення → перегляд → повернення.</p>
+  </div>
+  <script>
+    const labels = { list: "Мої навчальні завдання", create: "Крок 2 · заповнення форми", details: "Крок 3 · перегляд і статус" };
+    const screens = [...document.querySelectorAll("[data-screen]")];
+    const screenLabel = document.querySelector("#screen-label");
+    function showScreen(name) {
+      screens.forEach((screen) => { screen.hidden = screen.dataset.screen !== name; });
+      screenLabel.textContent = labels[name];
+      window.location.hash = name;
+    }
+    document.addEventListener("click", (event) => {
+      const go = event.target.closest("[data-go]");
+      if (go) showScreen(go.dataset.go);
+      if (event.target.closest("[data-save]")) {
+        document.querySelector("#create-feedback").textContent = "Завдання збережено в прототипі.";
+        showScreen("details");
+      }
+      if (event.target.closest("[data-complete]")) {
+        document.querySelector("#detail-status").textContent = "Виконано";
+        document.querySelector("#detail-status").style.color = "#31734c";
+        document.querySelector("#detail-feedback").textContent = "Статус змінено.";
+      }
+    });
+    const initial = window.location.hash.slice(1);
+    showScreen(["list", "create", "details"].includes(initial) ? initial : "list");
+  </script>
+</body>
+</html>

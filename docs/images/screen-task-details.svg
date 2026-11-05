@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="390" height="844" viewBox="0 0 390 844" role="img" aria-labelledby="title desc">
+  <title id="title">Ескіз екрана перегляду завдання</title>
+  <desc id="desc">Мобільний екран із деталями завдання, статусом і кнопками зміни та повернення.</desc>
+  <rect width="390" height="844" fill="#F7F9FC"/>
+  <rect x="0" y="0" width="390" height="88" fill="#17324D"/>
+  <text x="24" y="39" fill="#FFFFFF" font-family="Arial" font-size="21" font-weight="700">Деталі завдання</text>
+  <text x="24" y="66" fill="#D9E8F4" font-family="Arial" font-size="14">Крок 3 · перегляд і статус</text>
+  <rect x="24" y="122" width="342" height="290" rx="16" fill="#FFFFFF" stroke="#C8D5E2"/>
+  <text x="48" y="164" fill="#17324D" font-family="Arial" font-size="22" font-weight="700">Практична робота №13</text>
+  <rect x="48" y="185" width="108" height="28" rx="14" fill="#DFF3E7"/>
+  <text x="102" y="204" text-anchor="middle" fill="#31734C" font-family="Arial" font-size="13" font-weight="700">У роботі</text>
+  <text x="48" y="252" fill="#8192A3" font-family="Arial" font-size="13">Дисципліна</text>
+  <text x="48" y="277" fill="#17324D" font-family="Arial" font-size="16">Технологія створення продуктів</text>
+  <text x="48" y="319" fill="#8192A3" font-family="Arial" font-size="13">Дедлайн</text>
+  <text x="48" y="344" fill="#17324D" font-family="Arial" font-size="16">31 жовтня 2026</text>
+  <text x="48" y="386" fill="#8192A3" font-family="Arial" font-size="13">Опис</text>
+  <text x="48" y="410" fill="#17324D" font-family="Arial" font-size="15">Створити ескізи основних екранів.</text>
+  <rect x="24" y="444" width="342" height="56" rx="14" fill="#2A6F97"/>
+  <text x="195" y="479" text-anchor="middle" fill="#FFFFFF" font-family="Arial" font-size="16" font-weight="700">Позначити виконаним</text>
+  <rect x="24" y="520" width="342" height="56" rx="14" fill="#FFFFFF" stroke="#2A6F97"/>
+  <text x="195" y="555" text-anchor="middle" fill="#2A6F97" font-family="Arial" font-size="16" font-weight="700">Редагувати</text>
+  <rect x="24" y="596" width="342" height="56" rx="14" fill="#FFFFFF" stroke="#C8D5E2"/>
+  <text x="195" y="631" text-anchor="middle" fill="#425466" font-family="Arial" font-size="16" font-weight="700">Повернутися до списку</text>
+  <text x="24" y="818" fill="#8192A3" font-family="Arial" font-size="12">Ескіз 3 · перегляд завдання</text>
+</svg>

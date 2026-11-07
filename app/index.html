@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="uk">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Student Task Manager — MVP</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <a class="skip-link" href="#task-list">Перейти до списку завдань</a>
+
+  <header class="app-header">
+    <div class="app-header__inner">
+      <div>
+        <h1>Student Task Manager</h1>
+        <p>Навчальні завдання з усіх дисциплін в одному списку</p>
+      </div>
+      <dl class="counters" aria-label="Статистика завдань">
+        <div><dt>Усі</dt><dd id="count-all">0</dd></div>
+        <div><dt>Активні</dt><dd id="count-active">0</dd></div>
+        <div><dt>Виконані</dt><dd id="count-done">0</dd></div>
+      </dl>
+    </div>
+  </header>
+
+  <main class="layout">
+    <section class="card form-card" aria-labelledby="form-title">
+      <h2 id="form-title">Нове завдання</h2>
+      <form id="task-form" novalidate>
+        <div class="field">
+          <label for="name">Назва завдання <span class="required" aria-hidden="true">*</span></label>
+          <input id="name" name="name" type="text" autocomplete="off" required
+                 aria-describedby="name-hint" placeholder="Наприклад, практична робота №16">
+          <p class="hint" id="name-hint">Обов’язкове поле. Назва лише з пробілів не приймається.</p>
+        </div>
+
+        <div class="field">
+          <label for="category">Дисципліна</label>
+          <select id="category" name="category">
+            <option>Технологія створення програмних продуктів</option>
+            <option>Web-технології та web-дизайн</option>
+            <option>Тестування програмних систем</option>
+            <option>Англійська мова</option>
+            <option>Інше</option>
+          </select>
+        </div>
+
+        <div class="field-row">
+          <div class="field">
+            <label for="deadline">Термін виконання</label>
+            <input id="deadline" name="deadline" type="date">
+          </div>
+          <div class="field">
+            <label for="priority">Пріоритет</label>
+            <select id="priority" name="priority">
+              <option value="low">Низький</option>
+              <option value="medium" selected>Середній</option>
+              <option value="high">Високий</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="description">Опис</label>
+          <textarea id="description" name="description" rows="3"
+                    placeholder="Що саме потрібно зробити"></textarea>
+        </div>
+
+        <p class="feedback" id="form-feedback" role="status" aria-live="polite"></p>
+
+        <div class="form-actions">
+          <button class="btn btn--primary" type="submit" id="submit-button">Додати завдання</button>
+          <button class="btn btn--muted" type="button" id="cancel-edit" hidden>Скасувати редагування</button>
+        </div>
+      </form>
+    </section>
+
+    <section class="tasks" aria-labelledby="list-title">
+      <div class="tasks__head">
+        <h2 id="list-title">Завдання</h2>
+        <div class="filters" role="group" aria-label="Фільтр за станом">
+          <button class="filter" type="button" data-filter="all" aria-pressed="true">Усі</button>
+          <button class="filter" type="button" data-filter="active" aria-pressed="false">Активні</button>
+          <button class="filter" type="button" data-filter="done" aria-pressed="false">Виконані</button>
+        </div>
+      </div>
+
+      <p class="empty" id="empty-state" hidden></p>
+      <ul class="task-list" id="task-list"></ul>
+    </section>
+  </main>
+
+  <footer class="app-footer">
+    <p>MVP практичної роботи №16. Дані зберігаються лише в пам’яті сторінки: після перезавантаження список порожній.</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

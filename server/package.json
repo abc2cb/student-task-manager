@@ -1,0 +1,24 @@
+{
+  "name": "student-task-manager",
+  "version": "2.0.0",
+  "private": true,
+  "description": "Student Task Manager — розширена версія: серверна частина, SQLite, облікові записи користувачів",
+  "type": "commonjs",
+  "engines": {
+    "node": ">=22.5.0"
+  },
+  "scripts": {
+    "start": "node --env-file-if-exists=.env app.js",
+    "init-db": "node db/init-db.js",
+    "test": "node --test"
+  },
+  "keywords": [
+    "student",
+    "task-manager",
+    "sqlite",
+    "express-less",
+    "educational"
+  ],
+  "author": "Бєлка Антон Андрійович",
+  "license": "MIT"
+}

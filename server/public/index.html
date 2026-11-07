@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="uk">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Student Task Manager</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Перейти до основного вмісту</a>
+
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+  <main id="main-content">
+    <!-- Екран входу та реєстрації -->
+    <section class="auth" id="auth-view" hidden>
+      <div class="auth__intro">
+        <p class="auth__eyebrow">31-КНС · Технологія створення програмних продуктів</p>
+        <h1>Student Task Manager</h1>
+        <p class="auth__lead">Усі навчальні завдання з різних дисциплін — в одному списку.
+          Створюйте завдання, ставте терміни й пріоритети, відмічайте виконане.</p>
+        <ul class="auth__features">
+          <li>збереження в базі даних SQLite;</li>
+          <li>окремий список для кожного користувача;</li>
+          <li>пошук, фільтри та сортування.</li>
+        </ul>
+      </div>
+
+      <div class="card auth__card">
+        <div class="tabs" role="tablist" aria-label="Вхід або реєстрація">
+          <button class="tab" type="button" role="tab" id="tab-login" aria-selected="true"
+                  aria-controls="login-form" data-auth-tab="login">Вхід</button>
+          <button class="tab" type="button" role="tab" id="tab-register" aria-selected="false"
+                  aria-controls="register-form" data-auth-tab="register">Реєстрація</button>
+        </div>
+
+        <form id="login-form" class="form" aria-labelledby="tab-login" novalidate>
+          <div class="field">
+            <label for="login-email">Електронна адреса</label>
+            <input id="login-email" name="email" type="email" autocomplete="email" required
+                   placeholder="student@example.com">
+          </div>
+          <div class="field">
+            <label for="login-password">Пароль</label>
+            <input id="login-password" name="password" type="password" autocomplete="current-password" required>
+          </div>
+          <p class="feedback" id="login-feedback" role="alert" hidden></p>
+          <button class="btn btn--primary" type="submit">Увійти</button>
+        </form>
+
+        <form id="register-form" class="form" aria-labelledby="tab-register" novalidate hidden>
+          <div class="field">
+            <label for="register-name">Ім’я</label>
+            <input id="register-name" name="name" type="text" autocomplete="name" required
+                   placeholder="Антон Бєлка">
+          </div>
+          <div class="field">
+            <label for="register-email">Електронна адреса</label>
+            <input id="register-email" name="email" type="email" autocomplete="email" required
+                   placeholder="student@example.com">
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label for="register-password">Пароль</label>
+              <input id="register-password" name="password" type="password"
+                     autocomplete="new-password" required minlength="8">
+            </div>
+            <div class="field">
+              <label for="register-password-confirm">Повторіть пароль</label>
+              <input id="register-password-confirm" name="password_confirm" type="password"
+                     autocomplete="new-password" required minlength="8">
+            </div>
+          </div>
+          <p class="hint">Пароль — щонайменше 8 символів. Зберігається лише хеш scrypt.</p>
+          <p class="feedback" id="register-feedback" role="alert" hidden></p>
+          <button class="btn btn--primary" type="submit">Створити обліковий запис</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- Основний екран -->
+    <section id="app-view" hidden>
+      <header class="app-header">
+        <div class="app-header__inner">
+          <div>
+            <h1>Student Task Manager</h1>
+            <p id="user-line">Мої навчальні завдання</p>
+          </div>
+          <div class="app-header__actions">
+            <dl class="counters" aria-label="Статистика завдань">
+              <div><dt>Усі</dt><dd id="count-all">0</dd></div>
+              <div><dt>Активні</dt><dd id="count-active">0</dd></div>
+              <div><dt>Виконані</dt><dd id="count-done">0</dd></div>
+            </dl>
+            <button class="btn btn--ghost" type="button" id="logout-button">Вийти</button>
+          </div>
+        </div>
+      </header>
+
+      <div class="layout">
+        <aside class="card form-card" aria-labelledby="form-title">
+          <h2 id="form-title">Нове завдання</h2>
+          <form id="task-form" novalidate>
+            <div class="field">
+              <label for="task-title">Назва <span class="required" aria-hidden="true">*</span></label>
+              <input id="task-title" name="title" type="text" required autocomplete="off"
+                     placeholder="Наприклад, практична робота №17">
+            </div>
+            <div class="field">
+              <label for="task-description">Опис</label>
+              <textarea id="task-description" name="description" rows="3"
+                        placeholder="Що саме потрібно зробити"></textarea>
+            </div>
+            <div class="field-row">
+              <div class="field">
+                <label for="task-deadline">Термін</label>
+                <input id="task-deadline" name="deadline" type="date">
+              </div>
+              <div class="field">
+                <label for="task-priority">Пріоритет</label>
+                <select id="task-priority" name="priority">
+                  <option value="low">Низький</option>
+                  <option value="medium" selected>Середній</option>
+                  <option value="high">Високий</option>
+                </select>
+              </div>
+            </div>
+            <div class="field">
+              <label for="task-category">Дисципліна</label>
+              <select id="task-category" name="category_id">
+                <option value="">Без дисципліни</option>
+              </select>
+            </div>
+            <p class="feedback" id="task-feedback" role="alert" hidden></p>
+            <div class="form-actions">
+              <button class="btn btn--primary" type="submit" id="task-submit">Додати завдання</button>
+              <button class="btn btn--muted" type="button" id="task-cancel" hidden>Скасувати редагування</button>
+            </div>
+          </form>
+        </aside>
+
+        <section class="tasks" aria-labelledby="list-title">
+          <div class="tasks__head">
+            <h2 id="list-title">Завдання</h2>
+            <p class="tasks__hint">Пошук і фільтри працюють разом</p>
+          </div>
+
+          <div class="toolbar card">
+            <div class="field toolbar__search">
+              <label for="search">Пошук за назвою</label>
+              <input id="search" type="search" placeholder="Наприклад, практична" autocomplete="off">
+            </div>
+            <div class="field">
+              <label for="filter-status">Стан</label>
+              <select id="filter-status">
+                <option value="">Усі</option>
+                <option value="active">Активні</option>
+                <option value="done">Виконані</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="filter-priority">Пріоритет</label>
+              <select id="filter-priority">
+                <option value="">Усі</option>
+                <option value="high">Високий</option>
+                <option value="medium">Середній</option>
+                <option value="low">Низький</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="filter-category">Дисципліна</label>
+              <select id="filter-category">
+                <option value="">Усі</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="sort">Сортування</label>
+              <select id="sort">
+                <option value="created_desc">Спочатку нові</option>
+                <option value="deadline_asc">Термін: найближчі</option>
+                <option value="deadline_desc">Термін: найдальші</option>
+                <option value="priority_desc">Пріоритет: високий → низький</option>
+                <option value="priority_asc">Пріоритет: низький → високий</option>
+                <option value="title_asc">Назва за алфавітом</option>
+              </select>
+            </div>
+          </div>
+
+          <p class="state" id="loading-state" hidden>Завантаження завдань…</p>
+          <p class="state state--error" id="error-state" role="alert" hidden></p>
+          <p class="state" id="empty-state" hidden></p>
+          <ul class="task-list" id="task-list"></ul>
+        </section>
+      </div>
+    </section>
+  </main>
+
+  <footer class="app-footer">
+    <p>Student Task Manager · розширена версія після практичної роботи №16 · дані зберігаються в SQLite</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

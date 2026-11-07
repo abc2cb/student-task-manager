@@ -18,6 +18,10 @@ function openDatabase(dbPath) {
   const db = new DatabaseSync(dbPath);
   db.exec("PRAGMA foreign_keys = ON");
   db.exec("PRAGMA journal_mode = WAL");
+
+  // SQLite lower() змінює регістр лише для ASCII, тому для кирилиці
+  // реєстронезалежний пошук і сортування виконує JavaScript-функція.
+  db.function("uk_lower", { deterministic: true }, (value) => String(value ?? "").toLowerCase());
   db.exec(fs.readFileSync(SCHEMA_PATH, "utf8"));
   return new DatabaseSyncQueries(db);
 }
@@ -99,7 +103,7 @@ class DatabaseSyncQueries {
     const params = [userId];
 
     if (search) {
-      clauses.push("lower(t.title) LIKE lower(?)");
+      clauses.push("uk_lower(t.title) LIKE uk_lower(?)");
       params.push(`%${search}%`);
     }
     if (status) {
@@ -123,7 +127,7 @@ class DatabaseSyncQueries {
         "CASE t.priority WHEN 'high' THEN 0 WHEN 'medium' THEN 1 ELSE 2 END, t.deadline IS NULL, t.deadline ASC",
       priority_asc:
         "CASE t.priority WHEN 'low' THEN 0 WHEN 'medium' THEN 1 ELSE 2 END, t.deadline IS NULL, t.deadline ASC",
-      title_asc: "lower(t.title) ASC",
+      title_asc: "uk_lower(t.title) ASC",
     }[sort] ?? "t.created_at DESC, t.id DESC";
 
     return this.db

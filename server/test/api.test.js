@@ -315,3 +315,23 @@ test("12. Дані зберігаються після перезапуску з
   const after = await request("GET", "/api/tasks", { cookie: relogin.cookie });
   assert.equal(after.payload.tasks.length, expected);
 });
+
+test("13. Пошук і сортування не залежать від регістру кирилиці", async () => {
+  const created = await request("POST", "/api/tasks", {
+    cookie: userA.cookie,
+    body: { title: "Практична робота №19", priority: "low" },
+  });
+  assert.equal(created.status, 201);
+
+  const search = await request("GET", `/api/tasks?q=${encodeURIComponent("практична")}`, {
+    cookie: userA.cookie,
+  });
+  assert.ok(
+    search.payload.tasks.some((task) => task.title === "Практична робота №19"),
+    "пошук малими літерами має знаходити назву з великої літери"
+  );
+
+  const sorted = await request("GET", "/api/tasks?sort=title_asc", { cookie: userA.cookie });
+  const titles = sorted.payload.tasks.map((task) => task.title.toLowerCase());
+  assert.deepEqual(titles, [...titles].sort());
+});
